@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.javacord:javacord:3.4.0'
+    implementation 'com.progsbase.libraries:JSON:0.4.0'
+    implementation 'com.clumd.projects:Java-JSON:1.0.3'
+    implementation 'org.webjars:JSON-Patch:0.4.1'
+    implementation 'org.json:json:20220320'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    runtimeOnly 'org.apache.logging.log4j:log4j-core:2.17.2'
+}
+
+test {
+    useJUnitPlatform()
+}
