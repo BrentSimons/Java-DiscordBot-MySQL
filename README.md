@@ -14,13 +14,13 @@ In deze repository kan je een Java Discord Bot vinden die ook voor school heb ge
   - $$id: de bot reageert met je discord ID.
   - $$commands: een discord embed die al de commands laat zien.
   - $$copy: de bot kopieert de argumenten die je achter de command plaatst.
-  - $$ping: de bot reageert met ping.
+  - $$ping: de bot reageert met pong.
 
-## Gebruikte technologiën:
+## Gebruikte technologieën:
 
 **[Discord Developer Portal](https://discord.com/developers/)**
 
-Dit word gebruikt voor het aanmaken van de bot in Discord, ook kan je hier de naam, de beschrijving en de profielfoto van de Bot bewerken.
+Dit wordt gebruikt voor het aanmaken van de bot in Discord, ook kan je hier de naam, de beschrijving en de profielfoto van de Bot bewerken.
 
 **[Java](https://www.java.com/)**
 
@@ -53,28 +53,28 @@ De database heeft 1 tabel met 5 kolommen, hierin worden de gegevens van de gebru
 - level
 - xp sinds vorige level-up
 
-Voor een connectie tussen de bot en de Database te maken is er gebruik gemaakt van JDBC.
+Voor een connectie tussen de bot en de Database te maken is er gebruikgemaakt van JDBC.
 ## Hoe start je zelf de bot?
 
 1. Maak een discord applicatie en bot aan op de [Discord Developer Portal](https://discord.com/developers/)
 2. Maak een [MySQL server](https://dev.mysql.com/downloads/mysql/) aan of gebruik [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
-3. Verander het discord bot token en de inlog gegevens van de database in de applicatie naar je eigen gegevens.
+3. Verander het discord bot token en de login gegevens van de database in de applicatie naar je eigen gegevens.
 4. Run het build.gradle bestand zodat je de gebruikte packages installeert.
 5. Run de applicatie.
 
 ## Hoe werken de levels
 
-Voor elk level moet je 1000 xp krijgen, de xp word gegeven per bericht dat je stuurd en word berekent met de volgende formule:
+Voor elk level moet je 1000 xp krijgen, de xp wordt gegeven per bericht dat je stuurd en wordt berekent met de volgende formule:
 
     Randint(messageLength + (100 - level))
 
-Maar als je level 75 of hoger bent word dit de formule versimpelt tot:
+Maar als je level 75 of hoger bent, dan wordt de formule versimpelt tot:
 
     Randint(messageLength + 25)
 
 Randint: 
-Deze functie genereet een willekeurig integer tussen 0 en het getal dat je meegeeft
+Deze functie genereert een willekeurig integer tussen 0 en het getal dat je meegeeft
 messageLength, level:
 Deze variabelen bevatten de lengte van het gestuurde bericht en het level dat de gebruiker is.
 
-Bij een level-up word je xp gereset naar 0.
+Bij een level-up wordt je xp gereset naar 0.
