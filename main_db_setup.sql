@@ -1,5 +1,5 @@
-drop table users;
-drop schema discord;
+-- drop table users;
+-- drop schema discord;
 
 create schema discord;
 use discord;
@@ -15,18 +15,18 @@ create table Users
 
 # --------------------------------------------------------------
 
-INSERT INTO `discord`.`users`
+INSERT INTO discord.users
 (discordID,
  discordUsername,
  totalSentMessages,
  serverLevel,
- `serverXp`)
-VALUES (259751295856697856, "Yarin", 10, 1);
+ serverXp)
+VALUES (259751295856697856, "Yarin", 10, 1, 0);
 
-INSERT INTO `discord`.`users`
-(`discordID`,
- `discordUsername`,
- `totalSentMessages`,
- `serverLevel`,
- `serverXp`)
-VALUES (269691295856697856, "Brent", 35, 3);
+INSERT INTO discord.users
+(discordID,
+ discordUsername,
+ totalSentMessages,
+ serverLevel,
+ serverXp)
+VALUES (269691295856697856, "Brent", 35, 3, 0);
