@@ -20,11 +20,12 @@ public class Main {
     public static String prefix = "$$";
 
     public static void main(String[] args) {
-
+        // inloggen op discord
         DiscordApi api = new DiscordApiBuilder()
                 .setToken("discord-bot-token")
                 .login().join();
 
+        // command dat alle commands in een embed zet
         api.addMessageCreateListener(eventShCommands -> {
             if (eventShCommands.getMessageContent().trim().equalsIgnoreCase(prefix + "commands")) {
                 EmbedBuilder embed = new EmbedBuilder()
@@ -40,13 +41,16 @@ public class Main {
             }
         });
 
+        // checkt elk bericht
         api.addMessageCreateListener(event -> {
+            // pak standaard gegevents uit bericht
             MessageAuthor eventMA = event.getMessageAuthor();
             long discordID = eventMA.getId();
             String discordName = eventMA.getName();
 
             System.out.println("Initializing user " + discordName + " with ID " + discordID);
             try {
+                // connect met de DB
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Discord", "username", "password");
                 System.out.println(discordID + " connection to DB initialized\n");
 
@@ -55,16 +59,22 @@ public class Main {
 
                 System.out.println("Checking if user is in DB or not: ");
 
+                // checkt of user die bericht stuurt in DB zit
+                // result.next is negatief als die resultset leeg is
                 if (!resultSet.next()) {
-                    // add user to DB
+                    // voer user aan DB toe als negatief
                     System.out.print("!! User not in DB, adding!! ");
+                    // je krijgt 50 xp voor je eerste bericht
                     statement.execute("INSERT INTO users (discordID,discordUsername,totalSentMessages, serverLevel,serverXp) VALUES ("
                             + discordID + ", '" + discordName + "',1,0,50);");
                 } else {
+                    // nieuwe user toevoegen
                     System.out.println("!! User in db !!");
+                    // oude gegevens
                     int oldXp = resultSet.getInt(5);
                     int level = (resultSet.getInt(4));
                     Random rand = new Random();
+                    // nieuwe xp berekenen
                     int wonXp;
                     int messageLength = event.getMessageContent().length();
                     if (level < 75) {
@@ -72,6 +82,7 @@ public class Main {
                     } else {
                         wonXp = rand.nextInt(messageLength + 25);
                     }
+                    // checken of de user genoeg xp heeft voor levelup
                     if (oldXp + wonXp > 1000) {
                         statement.execute("UPDATE users "
                                 + "SET totalSentMessages = totalSentMessages + 1"
@@ -90,9 +101,9 @@ public class Main {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
         });
 
+        // id finder command
         api.addMessageCreateListener(eventCheckID -> {
             if (eventCheckID.getMessageContent().trim().equalsIgnoreCase(prefix + "ID")) {
                 MessageAuthor eventMessageAuthor = eventCheckID.getMessageAuthor();
@@ -101,7 +112,7 @@ public class Main {
             }
         });
 
-
+        // level checker command
         api.addMessageCreateListener(eventCheckLevel -> {
             if (eventCheckLevel.getMessageContent().trim().equalsIgnoreCase(prefix + "level")) {
                 MessageAuthor eventMA = eventCheckLevel.getMessageAuthor();
@@ -122,13 +133,14 @@ public class Main {
             }
         });
 
-
+        // $$ping -> reply with: "Pong!"
         api.addMessageCreateListener(eventPing -> {
             if (eventPing.getMessageContent().equalsIgnoreCase(prefix + "ping")) {
                 eventPing.getChannel().sendMessage("Pong!");
             }
         });
 
+        // copy arguments
         api.addMessageCreateListener(eventCopy -> {
             if (eventCopy.getMessageContent().substring(0, 6).equalsIgnoreCase(prefix + "copy")) {
                 eventCopy.getChannel().sendMessage(eventCopy.getMessageContent().substring(6));
@@ -136,6 +148,7 @@ public class Main {
             }
         });
 
+        // replies with users name
         api.addMessageCreateListener(eventName -> {
             if (eventName.getMessageContent().substring(0, 6).equalsIgnoreCase(prefix + "name")) {
                 eventName.getChannel().sendMessage(eventName.getMessageAuthor().getName());
