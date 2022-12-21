@@ -1,6 +1,6 @@
 # PDP Project Java Discord Bot
 
-In deze repository kan je het project vinden dat ik heb gemaakt voor mijn vak Professional Skills 1.
+This repository was made for a school project.
 
 ## Algemene info:
 
